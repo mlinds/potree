@@ -39,7 +39,9 @@ export class FirstPersonControls extends EventDispatcher {
 			LEFT: ['A'.charCodeAt(0), 37],
 			RIGHT: ['D'.charCodeAt(0), 39],
 			UP: ['R'.charCodeAt(0), 33],
-			DOWN: ['F'.charCodeAt(0), 34]
+			DOWN: ['F'.charCodeAt(0), 34],
+			Q: ['Q'.charCodeAt(0)],
+			E: ['E'.charCodeAt(0)]
 		};
 
 		this.fadeFactor = 50;
@@ -202,6 +204,8 @@ export class FirstPersonControls extends EventDispatcher {
 			let moveRight = this.keys.RIGHT.some(e => ih.pressedKeys[e]);
 			let moveUp = this.keys.UP.some(e => ih.pressedKeys[e]);
 			let moveDown = this.keys.DOWN.some(e => ih.pressedKeys[e]);
+			let rotateLeft = this.keys.Q.some(e => ih.pressedKeys[e]);
+			let rotateRight = this.keys.E.some(e => ih.pressedKeys[e]);
 
 			if(this.lockElevation){
 				let dir = view.direction;
@@ -239,6 +243,13 @@ export class FirstPersonControls extends EventDispatcher {
 				this.translationWorldDelta.z = this.viewer.getMoveSpeed();
 			} else if (moveDown) {
 				this.translationWorldDelta.z = -this.viewer.getMoveSpeed();
+			}
+
+			if (rotateLeft) {
+				this.yawDelta -= this.rotationSpeed * delta;
+			}
+			if (rotateRight) {
+				this.yawDelta += this.rotationSpeed * delta;
 			}
 		}
 
